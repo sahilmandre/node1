@@ -31,11 +31,6 @@ app.post('/login', function (req, res) {
 
 app.get('/users', (req, res) => {
 //   res.render('users')
-    if (data=== null) {
-        console.log('no data')
-        res.send("no data")
-    }
-    
     try {  
         var data = fs.readFileSync('username.txt', 'utf8');
         console.log(data.toString());
@@ -47,7 +42,22 @@ app.get('/users', (req, res) => {
         console.log('Error:', e.stack);
     };
     
-   
+   fs.readFile('username.txt', 'utf8', function(err, data) {
+    // var msg = "";
+        if(err) {
+            console.log("first read returned error: ", err);
+        }
+        else {
+            if (data === null) 
+                console.log("first read returned NULL data!");
+            else if (data === "") {
+                console.log("first read returned EMPTY data!");
+                // return res.render('./views/login.ejs');
+            }
+            else
+                console.log("first read returned data: ", data);
+        }
+    });
     
 })
 
